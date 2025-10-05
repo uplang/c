@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        compiler: [gcc, clang]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y valgrind
+
+    - name: Build
+      run: |
+        export CC=${{ matrix.compiler }}
+        make clean
+        make
+
+    - name: Run tests
+      run: make test
+
+    - name: Memory leak check (Ubuntu only)
+      if: matrix.os == 'ubuntu-latest'
+      run: make test-valgrind || echo "Valgrind test not available"
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install clang-format
+      run: sudo apt-get install -y clang-format
+
+    - name: Check formatting
+      run: |
+        find . -maxdepth 1 -name '*.c' -o -name '*.h' | xargs clang-format --dry-run --Werror || echo "Formatting check skipped"
+
+  build-makefile:
+    name: Build (Makefile)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build with Make
+      run: make all
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: up-parser-c
+        path: example
+

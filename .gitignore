@@ -1,0 +1,39 @@
+# Object files
+*.o
+*.obj
+
+# Binaries
+*.exe
+*.out
+*.app
+up-example
+up-parse
+libuplang.a
+libuplang.so
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Test outputs
+test_output/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile.cmake
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
