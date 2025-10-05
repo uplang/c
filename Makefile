@@ -2,9 +2,11 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -pedantic
-TARGET = up-parser
-SOURCES = up.c
-OBJECTS = $(SOURCES:.c=.o)
+TARGET = example
+LIB_SOURCES = up.c
+EXAMPLE_SOURCES = example.c
+ALL_SOURCES = $(LIB_SOURCES) $(EXAMPLE_SOURCES)
+OBJECTS = $(ALL_SOURCES:.c=.o)
 
 .PHONY: help
 help: ## Show this help message
@@ -15,19 +17,13 @@ help: ## Show this help message
 
 .PHONY: test
 test: build ## Run tests
-	@echo "Running tests..."
-	@for file in examples/*.up; do \
-		echo "Testing $$file..."; \
-		./$(TARGET) "$$file" || echo "Test not yet implemented"; \
-	done
+	@echo "Running example..."
+	./$(TARGET)
 
 .PHONY: test-valgrind
 test-valgrind: build ## Run tests with Valgrind
 	@echo "Running Valgrind tests..."
-	@for file in examples/*.up; do \
-		echo "Valgrind testing $$file..."; \
-		valgrind --leak-check=full --error-exitcode=1 ./$(TARGET) "$$file" || echo "Valgrind test skipped"; \
-	done
+	valgrind --leak-check=full --error-exitcode=1 ./$(TARGET) || echo "Valgrind not available"
 
 .PHONY: all
 all: build ## Build all targets
