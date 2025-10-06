@@ -3,7 +3,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -pedantic
 TARGET = example
-LIB_SOURCES = up.c
+LIB_SOURCES = up.c up_api.c
 EXAMPLE_SOURCES = example.c
 ALL_SOURCES = $(LIB_SOURCES) $(EXAMPLE_SOURCES)
 OBJECTS = $(ALL_SOURCES:.c=.o)

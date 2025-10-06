@@ -79,7 +79,11 @@ up_parser_t *up_parser_new(void);
 void up_parser_free(up_parser_t *parser);
 
 up_document_t *up_parse(const char *input);
+up_document_t *up_parse_string(const char *input);
 up_document_t *up_parser_parse_document(up_parser_t *parser, const char *input);
+
+const char *up_get_error(void);
+up_node_t *up_document_get(up_document_t *doc, const char *key);
 
 void up_document_free(up_document_t *doc);
 bool up_document_is_empty(const up_document_t *doc);
