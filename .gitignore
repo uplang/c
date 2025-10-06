@@ -8,6 +8,7 @@
 *.app
 up-example
 up-parse
+example
 libuplang.a
 libuplang.so
 

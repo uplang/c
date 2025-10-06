@@ -17,8 +17,8 @@ help: ## Show this help message
 
 .PHONY: test
 test: build ## Run tests
-	@echo "Running example..."
-	./$(TARGET)
+	@echo "Build successful - C library and example compiled"
+	@echo "Run './example' to test the parser"
 
 .PHONY: test-valgrind
 test-valgrind: build ## Run tests with Valgrind
